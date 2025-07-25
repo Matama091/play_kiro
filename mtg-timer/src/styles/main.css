@@ -1,0 +1,311 @@
+/**
+ * Main styles for MTG Time Manager
+ * Mobile-first responsive design approach
+ * Requirements: 4.1, 4.2, 4.3, 4.4
+ */
+
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Color scheme variables */
+:root {
+  --color-primary: #2196f3;
+  --color-warning: #ff9800;
+  --color-urgent: #f44336;
+  --color-background: #fafafa;
+  --color-text: #333;
+  --color-text-light: #666;
+  
+  /* Additional colors for timer display */
+  --color-warning-bg: #fff3e0;
+  --color-urgent-bg: #ffebee;
+  --color-white: #ffffff;
+  
+  /* Mobile-first responsive variables */
+  --touch-target-min: 44px;  /* iOS/Android minimum touch target */
+  --spacing-xs: 0.5rem;       /* 8px */
+  --spacing-sm: 0.75rem;      /* 12px */
+  --spacing-md: 1rem;         /* 16px */
+  --spacing-lg: 1.5rem;       /* 24px */
+  --spacing-xl: 2rem;         /* 32px */
+  --spacing-xxl: 3rem;        /* 48px */
+  
+  /* Typography scale - mobile first */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+  --font-size-5xl: 3rem;      /* 48px */
+  
+  /* Container widths */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+  
+  /* Breakpoint-specific spacing */
+  --spacing-mobile: var(--spacing-sm);
+  --spacing-tablet: var(--spacing-md);
+  --spacing-desktop: var(--spacing-lg);
+  
+  /* Dynamic viewport units for better mobile support */
+  --vh-small: 1svh;  /* Small viewport height */
+  --vh-large: 1lvh;  /* Large viewport height */
+  --vh-dynamic: 1dvh; /* Dynamic viewport height */
+}
+
+/* Mobile-first base styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  /* Prevent zoom on input focus on iOS */
+  -webkit-text-size-adjust: 100%;
+  
+  /* Improve touch scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* App container - Mobile first */
+#app {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  
+  /* Ensure proper touch handling */
+  touch-action: manipulation;
+}
+
+/* Responsive typography adjustments */
+@media (min-width: 640px) {
+  :root {
+    --font-size-3xl: 2.25rem;  /* 36px */
+    --font-size-4xl: 2.75rem;  /* 44px */
+    --font-size-5xl: 3.5rem;   /* 56px */
+  }
+}
+
+@media (min-width: 768px) {
+  #app {
+    padding: var(--spacing-lg);
+  }
+  
+  :root {
+    --font-size-4xl: 3rem;     /* 48px */
+    --font-size-5xl: 4rem;     /* 64px */
+  }
+}
+
+@media (min-width: 1024px) {
+  #app {
+    padding: var(--spacing-xl);
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-text: #000000;
+    --color-background: #ffffff;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #1a1a1a;
+    --color-text: #ffffff;
+    --color-text-light: #cccccc;
+  }
+  
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+  }
+}
+
+/* Focus management for better accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Ensure touch targets meet minimum size requirements */
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"] {
+  min-height: var(--touch-target-min);
+  min-width: var(--touch-target-min);
+}
+/* Scree
+n size and orientation utilities - Requirements 4.3, 4.4 */
+
+/* Viewport-based sizing for better mobile support */
+.full-height {
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile browsers */
+}
+
+/* Container queries support (future enhancement) */
+@supports (container-type: inline-size) {
+  .responsive-container {
+    container-type: inline-size;
+  }
+  
+  @container (min-width: 400px) {
+    .container-responsive {
+      padding: var(--spacing-lg);
+    }
+  }
+}
+
+/* Screen orientation utilities */
+.landscape-only {
+  display: none;
+}
+
+.portrait-only {
+  display: block;
+}
+
+@media (orientation: landscape) {
+  .landscape-only {
+    display: block;
+  }
+  
+  .portrait-only {
+    display: none;
+  }
+}
+
+/* Screen size utilities */
+.mobile-only {
+  display: block;
+}
+
+.tablet-up {
+  display: none;
+}
+
+.desktop-up {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+  
+  .tablet-up {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .desktop-up {
+    display: block;
+  }
+}
+
+/* Aspect ratio utilities */
+@media (min-aspect-ratio: 16/9) {
+  .wide-screen-layout {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+}
+
+@media (max-aspect-ratio: 4/5) {
+  .tall-screen-layout {
+    justify-content: flex-start;
+    padding-top: var(--spacing-xxl);
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .warning-overlay,
+  .confirmation-overlay {
+    display: none !important;
+  }
+  
+  .control-buttons {
+    display: none !important;
+  }
+}
+
+/* Screen reader and accessibility utilities */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus management for different screen sizes */
+@media (max-width: 767px) {
+  :focus-visible {
+    outline-width: 3px;
+    outline-offset: 3px;
+  }
+}
+
+/* High DPI screen optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .timer-display-container {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Hover support detection */
+@media (hover: hover) and (pointer: fine) {
+  .hover-effects-enabled .timer-display-container:hover {
+    transform: translateY(-2px);
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .timer-display-container:hover {
+    transform: none;
+  }
+}
